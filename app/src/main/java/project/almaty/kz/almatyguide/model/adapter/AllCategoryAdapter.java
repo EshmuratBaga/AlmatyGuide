@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import project.almaty.kz.almatyguide.R;
-import project.almaty.kz.almatyguide.model.models.ResultPlaces;
+import project.almaty.kz.almatyguide.model.models.places.ResultPlaces;
 import project.almaty.kz.almatyguide.model.utils.Constants;
 
 /**
@@ -60,10 +61,37 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
         }
         holder.txtTitle.setText(places.get(position).getName());
+        Log.i("ssss", "" + 123);
+        calculationByDistance(Constants.UPlat,Constants.UPlng,places.get(position).getGeometry().getLocation().getLat(),places.get(position).getGeometry().getLocation().getLng());
     }
 
     @Override
     public int getItemCount() {
         return places.size();
+    }
+
+    public double calculationByDistance(String startLng, String startLon, Double endLng, Double endLon) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = Double.parseDouble(startLng);
+        double lat2 = endLng;
+        double lon1 = Double.parseDouble(startLon);
+        double lon2 = endLon;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("ssss", "val:" + valueResult + "   KM:" + kmInDec
+                + " Meter:" + meterInDec + " Radius * c " + Radius * c);
+
+        return Radius * c;
     }
 }

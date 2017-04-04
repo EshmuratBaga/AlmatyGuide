@@ -1,4 +1,4 @@
-package project.almaty.kz.almatyguide.model.models;
+package project.almaty.kz.almatyguide.model.models.places;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

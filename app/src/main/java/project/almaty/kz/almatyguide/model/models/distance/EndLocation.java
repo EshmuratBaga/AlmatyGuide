@@ -1,13 +1,10 @@
-package project.almaty.kz.almatyguide.model.models;
+
+package project.almaty.kz.almatyguide.model.models.distance;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Andrey on 3/20/2017.
- */
-
-public class Location {
+public class EndLocation {
 
     @SerializedName("lat")
     @Expose
@@ -31,4 +28,5 @@ public class Location {
     public void setLng(double lng) {
         this.lng = lng;
     }
+
 }

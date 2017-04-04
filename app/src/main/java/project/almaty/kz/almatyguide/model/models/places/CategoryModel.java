@@ -1,4 +1,4 @@
-package project.almaty.kz.almatyguide.model.models;
+package project.almaty.kz.almatyguide.model.models.places;
 
 /**
  * Created by Andrey on 3/20/2017.

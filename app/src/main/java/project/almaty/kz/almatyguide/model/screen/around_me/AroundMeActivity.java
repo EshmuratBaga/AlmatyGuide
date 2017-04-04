@@ -13,22 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import java.util.List;
 
 import project.almaty.kz.almatyguide.R;
-import project.almaty.kz.almatyguide.model.models.CityPlacesResponse;
-import project.almaty.kz.almatyguide.model.models.ResultPlaces;
-import project.almaty.kz.almatyguide.model.rest.ApiClient;
-import project.almaty.kz.almatyguide.model.rest.ApiInterface;
 import project.almaty.kz.almatyguide.model.screen.atm.AtmFragment;
 import project.almaty.kz.almatyguide.model.screen.bank.BankFragment;
 import project.almaty.kz.almatyguide.model.screen.restaurant.RestaurantFragment;
 import project.almaty.kz.almatyguide.model.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AroundMeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;

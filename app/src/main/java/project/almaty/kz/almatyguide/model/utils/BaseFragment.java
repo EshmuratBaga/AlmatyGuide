@@ -6,20 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.List;
 
-import project.almaty.kz.almatyguide.R;
 import project.almaty.kz.almatyguide.model.adapter.AllCategoryAdapter;
-import project.almaty.kz.almatyguide.model.models.CityPlacesResponse;
-import project.almaty.kz.almatyguide.model.models.ResultPlaces;
+import project.almaty.kz.almatyguide.model.models.distance.DistanceResponse;
+import project.almaty.kz.almatyguide.model.models.places.CityPlacesResponse;
+import project.almaty.kz.almatyguide.model.models.places.ResultPlaces;
 import project.almaty.kz.almatyguide.model.rest.ApiClient;
+import project.almaty.kz.almatyguide.model.rest.ApiClientDistance;
 import project.almaty.kz.almatyguide.model.rest.ApiInterface;
-import project.almaty.kz.almatyguide.model.screen.around_me.AroundMeActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,4 +1,4 @@
-package project.almaty.kz.almatyguide.model.models;
+package project.almaty.kz.almatyguide.model.models.places;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Andrey on 3/20/2017.
  */
 
-public class Southwest {
+public class Location {
 
     @SerializedName("lat")
     @Expose

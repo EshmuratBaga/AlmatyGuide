@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.almaty.kz.almatyguide.R;
-import project.almaty.kz.almatyguide.model.models.CategoryModel;
+import project.almaty.kz.almatyguide.model.models.places.CategoryModel;
 import project.almaty.kz.almatyguide.model.adapter.CategoryAdapter;
 import project.almaty.kz.almatyguide.model.utils.Constants;
 
