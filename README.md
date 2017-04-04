@@ -1,0 +1,2 @@
+# AlmatyGuide
+Almaty guide

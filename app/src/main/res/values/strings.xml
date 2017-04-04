@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">AlmatyGuide</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_around_me">AroundMeActivity</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="home">Главная</string>
+    <string name="favorite">Избранные</string>
+    <string name="hotel">Отель</string>
+    <string name="food">Столовая</string>
+    <string name="atm">Банкомат</string>
+    <string name="bank">Банк</string>
+    <string name="restaurant">Ресторан</string>
+    <string name="hostel">Хостел</string>
+    <string name="medical">Аптека</string>
+    <string name="bar">Бар</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
