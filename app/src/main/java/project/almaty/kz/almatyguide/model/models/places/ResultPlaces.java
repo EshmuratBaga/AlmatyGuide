@@ -1,8 +1,12 @@
 package project.almaty.kz.almatyguide.model.models.places;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,7 @@ import java.util.List;
  * Created by Andrey on 3/20/2017.
  */
 
-public class ResultPlaces {
+public class ResultPlaces implements Parcelable {
     @SerializedName("geometry")
     @Expose
     private Geometry geometry;
@@ -47,6 +51,24 @@ public class ResultPlaces {
     @SerializedName("photoPlaces")
     @Expose
     private List<PhotoPlaces> photoPlaces = new ArrayList<>();
+
+    public ResultPlaces(Geometry geometry, String icon, String id, String name,
+                        String placeId, String reference, String scope,
+                        List<String> types, String vicinity, float rating,
+                        OpeningHours openingHours, List<PhotoPlaces> photoPlaces) {
+        this.geometry = geometry;
+        this.icon = icon;
+        this.id = id;
+        this.name = name;
+        this.placeId = placeId;
+        this.reference = reference;
+        this.scope = scope;
+        this.types = types;
+        this.vicinity = vicinity;
+        this.rating = rating;
+        this.openingHours = openingHours;
+        this.photoPlaces = photoPlaces;
+    }
 
     public Geometry getGeometry() {
         return geometry;
@@ -142,5 +164,47 @@ public class ResultPlaces {
 
     public void setPhotoPlaces(List<PhotoPlaces> photoPlaces) {
         this.photoPlaces = photoPlaces;
+    }
+
+    protected ResultPlaces(Parcel in) {
+        icon = in.readString();
+        id = in.readString();
+        name = in.readString();
+        placeId = in.readString();
+        reference = in.readString();
+        scope = in.readString();
+        types = in.createStringArrayList();
+        vicinity = in.readString();
+        rating = in.readFloat();
+    }
+
+    public static final Creator<ResultPlaces> CREATOR = new Creator<ResultPlaces>() {
+        @Override
+        public ResultPlaces createFromParcel(Parcel in) {
+            return new ResultPlaces(in);
+        }
+
+        @Override
+        public ResultPlaces[] newArray(int size) {
+            return new ResultPlaces[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(icon);
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(placeId);
+        dest.writeString(reference);
+        dest.writeString(scope);
+        dest.writeStringList(types);
+        dest.writeString(vicinity);
+        dest.writeFloat(rating);
     }
 }

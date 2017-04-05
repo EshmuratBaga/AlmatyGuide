@@ -2,6 +2,7 @@ package project.almaty.kz.almatyguide.model.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import project.almaty.kz.almatyguide.R;
@@ -57,6 +59,7 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
             switch (v.getId()){
                 case R.id.cv_in:
                     Intent intent = new Intent(context, DetailsActivity.class);
+                    intent.putExtra("result", places.get(getAdapterPosition()));
                     context.startActivity(intent);
                     break;
             }
@@ -71,14 +74,14 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        if (places.get(position).getPhotoPlaces().size() != 0){
-            Log.d("dddd","" + 123);
-            Picasso.with(context).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=190&photoreference="
-                    + places.get(position).getPhotoPlaces().get(0).getPhotoReference() + "&sensor=true&key=" + Constants.apiKey).centerCrop().fit().into(holder.imageView);
-        }else {
+//        if (places.get(position).getPhotoPlaces().size() != 0){
+//            Log.d("dddd","" + 123);
+//            Picasso.with(context).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=190&photoreference="
+//                    + places.get(position).getPhotoPlaces().get(0).getPhotoReference() + "&sensor=true&key=" + Constants.apiKey).centerCrop().fit().into(holder.imageView);
+//        }else {
             Log.d("dddd","" + 123456);
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
-        }
+//        }
         holder.txtTitle.setText(places.get(position).getName());
         holder.txtDistance.setText(calculationByDistance(Constants.UPlat,Constants.UPlng,places.get(position).getGeometry().getLocation().getLat(),places.get(position).getGeometry().getLocation().getLng()) + " км");
         Log.i("ssss", "" + 123);
