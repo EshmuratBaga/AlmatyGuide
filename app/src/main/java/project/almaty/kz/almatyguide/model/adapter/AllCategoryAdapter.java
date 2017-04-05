@@ -1,6 +1,8 @@
 package project.almaty.kz.almatyguide.model.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import project.almaty.kz.almatyguide.R;
 import project.almaty.kz.almatyguide.model.models.places.ResultPlaces;
+import project.almaty.kz.almatyguide.model.screen.details_places.DetailsActivity;
 import project.almaty.kz.almatyguide.model.utils.Constants;
 
 /**
@@ -32,15 +35,31 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
         this.places = places;
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
+    public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView imageView;
         private TextView txtTitle;
+        private TextView txtDistance;
+        private CardView cardView;
 
         public MyHolder(View itemView) {
             super(itemView);
 
+            cardView = (CardView) itemView.findViewById(R.id.cv_in);
             imageView = (ImageView) itemView.findViewById(R.id.img_category_in);
             txtTitle = (TextView) itemView.findViewById(R.id.txt_title_category_in);
+            txtDistance = (TextView) itemView.findViewById(R.id.txt_distance_category_in);
+
+            cardView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.cv_in:
+                    Intent intent = new Intent(context, DetailsActivity.class);
+                    context.startActivity(intent);
+                    break;
+            }
         }
     }
 
@@ -61,8 +80,8 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
         }
         holder.txtTitle.setText(places.get(position).getName());
+        holder.txtDistance.setText(calculationByDistance(Constants.UPlat,Constants.UPlng,places.get(position).getGeometry().getLocation().getLat(),places.get(position).getGeometry().getLocation().getLng()) + " км");
         Log.i("ssss", "" + 123);
-        calculationByDistance(Constants.UPlat,Constants.UPlng,places.get(position).getGeometry().getLocation().getLat(),places.get(position).getGeometry().getLocation().getLng());
     }
 
     @Override
@@ -70,7 +89,7 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
         return places.size();
     }
 
-    public double calculationByDistance(String startLng, String startLon, Double endLng, Double endLon) {
+    public String calculationByDistance(String startLng, String startLon, Double endLng, Double endLon) {
         int Radius = 6371;// radius of earth in Km
         double lat1 = Double.parseDouble(startLng);
         double lat2 = endLng;
@@ -83,15 +102,14 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
                 * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
                 * Math.sin(dLon / 2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("ssss", "val:" + valueResult + "   KM:" + kmInDec
-                + " Meter:" + meterInDec + " Radius * c " + Radius * c);
+//        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("0.0");
+        String valueResult = newFormat.format(Radius * c);
+//        int kmInDec = Integer.valueOf(newFormat.format(km));
+//        double meter = valueResult % 1000;
+//        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("ssss", "val:" + valueResult + " Radius * c " + Radius * c);
 
-        return Radius * c;
+        return valueResult;
     }
 }

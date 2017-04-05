@@ -28,12 +28,16 @@
         <activity
             android:name=".model.screen.around_me.AroundMeActivity"
             android:label="@string/title_activity_around_me"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".model.screen.details_places.DetailsActivity"
+            android:label="@string/title_activity_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
