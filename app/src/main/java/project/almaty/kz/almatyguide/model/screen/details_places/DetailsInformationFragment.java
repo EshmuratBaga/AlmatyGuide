@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import project.almaty.kz.almatyguide.R;
 import project.almaty.kz.almatyguide.model.models.details_palces.PlaceDetailsResponse;
 import project.almaty.kz.almatyguide.model.models.details_palces.Result;
@@ -89,6 +91,9 @@ public class DetailsInformationFragment extends Fragment {
                     txtTitle.setText(resultDetails.getName());
                     txtTell.setText(resultDetails.getFormattedPhoneNumber());
                     txtAddress.setText(resultDetails.getFormattedAddress());
+                    String url = "http://maps.google.com/maps/api/staticmap?center=" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng() +
+                            "&zoom=14&size=600x300&sensor=false&markers=size:mid%7Ccolor:0x5ac5f8%7Clabel:%7C" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng();
+                    Picasso.with(getContext()).load(url).centerCrop().fit().into(imgMap);
                 }
             }
 

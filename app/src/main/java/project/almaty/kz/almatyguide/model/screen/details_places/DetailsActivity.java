@@ -48,6 +48,8 @@ public class DetailsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setElevation(0);
 
+        setTitle(resultPlaces.getName());
+
         viewPager = (ViewPager)findViewById(R.id.view_pager_my_advert);
         TabsPagerMyAdvertAdapter adapter = new TabsPagerMyAdvertAdapter(this,getSupportFragmentManager(),resultPlaces);
         viewPager.setAdapter(adapter);

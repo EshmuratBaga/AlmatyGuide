@@ -105,10 +105,28 @@ public class AroundMeActivity extends AppCompatActivity {
     }
 
     private void selectItem(MenuItem item) {
-        fragment = null;
         switch (item.getItemId()){
-
+            case R.id.menu_atm:
+                fragment = new AtmFragment();
+                title = "Банкомат";
+                bundle.putString(Constants.TYPE_PLACE,"atm");
+                break;
+            case R.id.menu_bank:
+                fragment = new BankFragment();
+                title = "Банк";
+                bundle.putString(Constants.TYPE_PLACE,"bank");
+                break;
+            case R.id.menu_restaurant:
+                fragment = new RestaurantFragment();
+                title = "Еда";
+                bundle.putString(Constants.TYPE_PLACE,"restaurant");
+                break;
+            default:
+                break;
         }
+        setFragment(fragment);
+        setActionBarTitle(title);
+        drawerLayout.closeDrawer(navigationView);
     }
 
     public void setFragment(Fragment fragment) {
@@ -118,7 +136,6 @@ public class AroundMeActivity extends AppCompatActivity {
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-//        drawerLayout.closeDrawer(navigationView);
     }
 
     public void setActionBarTitle(String item) {
