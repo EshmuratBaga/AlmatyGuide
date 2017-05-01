@@ -12,12 +12,12 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
-    @GET("nearbysearch/json?rankby=distance&sensor=false")
+    @GET("api/place/nearbysearch/json?rankby=distance&sensor=false")
     Call<CityPlacesResponse> getNearPlaces(@Query("location") String ltlng,@Query("types") String type,@Query("key") String key);
 
-    @GET("details/json?")
+    @GET("api/place/details/json?")
     Call<PlaceDetailsResponse> getDetailsPlace(@Query("placeid") String placeId, @Query("key") String key);
 
-    @GET("directions/json?&units=metric")
-    Call<DistanceResponse> getDistance(@Query("origin") String ltlng, @Query("destination") String pltplng, @Query("key") String key);
+    @GET("api/directions/json?&units=metric")
+    Call<DistanceResponse> getWay(@Query("origin") String ltlng, @Query("destination") String pltplng, @Query("sensor") boolean sensor, @Query("language") String language, @Query("key") String key);
 }

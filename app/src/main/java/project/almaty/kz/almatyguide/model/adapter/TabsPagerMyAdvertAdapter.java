@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import project.almaty.kz.almatyguide.model.models.places.Location;
 import project.almaty.kz.almatyguide.model.models.places.ResultPlaces;
 import project.almaty.kz.almatyguide.model.screen.details_places.DetailsInformationFragment;
 import project.almaty.kz.almatyguide.model.screen.details_places.DetailsMapFragment;
@@ -19,11 +20,13 @@ public class TabsPagerMyAdvertAdapter extends FragmentPagerAdapter {
     private String[] tabs;
     private Context context;
     private ResultPlaces resultPlaces;
+    private Location location;
 
-    public TabsPagerMyAdvertAdapter(Context context,FragmentManager fm,ResultPlaces resultPlaces) {
+    public TabsPagerMyAdvertAdapter(Context context, FragmentManager fm, ResultPlaces resultPlaces, Location location) {
         super(fm);
         this.context = context;
         this.resultPlaces = resultPlaces;
+        this.location = location;
         tabs = new String[]{
                 "Информация",
                 "Карта",
@@ -41,7 +44,7 @@ public class TabsPagerMyAdvertAdapter extends FragmentPagerAdapter {
             case 0:
                 return DetailsInformationFragment.getInstance(resultPlaces);
             case 1:
-                return DetailsMapFragment.getInstance();
+                return DetailsMapFragment.getInstance(location);
         }
         return null;
     }

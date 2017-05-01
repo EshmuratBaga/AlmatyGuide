@@ -60,6 +60,7 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
                 case R.id.cv_in:
                     Intent intent = new Intent(context, DetailsActivity.class);
                     intent.putExtra("result", places.get(getAdapterPosition()));
+                    intent.putExtra("location",places.get(getAdapterPosition()).getGeometry().getLocation());
                     context.startActivity(intent);
                     break;
             }
@@ -79,7 +80,6 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
 //            Picasso.with(context).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=190&photoreference="
 //                    + places.get(position).getPhotoPlaces().get(0).getPhotoReference() + "&sensor=true&key=" + Constants.apiKey).centerCrop().fit().into(holder.imageView);
 //        }else {
-            Log.d("dddd","" + 123456);
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
 //        }
         holder.txtTitle.setText(places.get(position).getName());

@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://maps.googleapis.com/maps/api/place/";
+    public static final String BASE_URL = "https://maps.googleapis.com/maps/";
     private static Retrofit retrofit = null;
     private static volatile ApiInterface apiInterface;
 

@@ -37,6 +37,7 @@ public class DetailsInformationFragment extends Fragment {
     private TextView txtAddress;
     private TextView txtDistance;
     private TextView txtTell;
+    private Bundle bundle;
 
     public static DetailsInformationFragment getInstance(ResultPlaces resultPlaces) {
         Bundle args = new Bundle();
@@ -54,7 +55,7 @@ public class DetailsInformationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         if (bundle != null){
             resultPlaces = bundle.getParcelable("place");
         }
@@ -92,8 +93,11 @@ public class DetailsInformationFragment extends Fragment {
                     txtTell.setText(resultDetails.getFormattedPhoneNumber());
                     txtAddress.setText(resultDetails.getFormattedAddress());
                     String url = "http://maps.google.com/maps/api/staticmap?center=" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng() +
-                            "&zoom=14&size=600x300&sensor=false&markers=size:mid%7Ccolor:0x5ac5f8%7Clabel:%7C" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng();
+                            "&zoom=13&size=600x300&sensor=false&markers=size:mid%7Ccolor:0x5ac5f8%7Clabel:%7C" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng() + "";
                     Picasso.with(getContext()).load(url).centerCrop().fit().into(imgMap);
+
+                    bundle.putDouble("lat", resultDetails.getGeometry().getLocation().getLat());
+                    bundle.putDouble("lng", resultDetails.getGeometry().getLocation().getLng());
                 }
             }
 
