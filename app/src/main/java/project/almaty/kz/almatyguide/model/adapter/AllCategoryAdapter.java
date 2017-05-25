@@ -75,16 +75,16 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-//        if (places.get(position).getPhotoPlaces().size() != 0){
-//            Log.d("dddd","" + 123);
-//            Picasso.with(context).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=190&photoreference="
-//                    + places.get(position).getPhotoPlaces().get(0).getPhotoReference() + "&sensor=true&key=" + Constants.apiKey).centerCrop().fit().into(holder.imageView);
-//        }else {
+        if (places.get(position).getPhotoPlaces() != null){
+            Log.d("dddd","sdsadsd");
+            Log.d("dddd","" + places.get(position).getPhotoPlaces().get(0).getPhotoReference());
+            Picasso.with(context).load(places.get(position).getPhotoPlaces().get(0).getPhotoReference()).centerCrop().fit().into(holder.imageView);
+        }else {
+            Log.d("dddd","sdsadsd");
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
-//        }
+        }
         holder.txtTitle.setText(places.get(position).getName());
         holder.txtDistance.setText(calculationByDistance(Constants.UPlat,Constants.UPlng,places.get(position).getGeometry().getLocation().getLat(),places.get(position).getGeometry().getLocation().getLng()) + " км");
-        Log.i("ssss", "" + 123);
     }
 
     @Override

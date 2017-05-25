@@ -13,6 +13,7 @@ import java.util.List;
 import project.almaty.kz.almatyguide.model.adapter.AllCategoryAdapter;
 import project.almaty.kz.almatyguide.model.models.distance.DistanceResponse;
 import project.almaty.kz.almatyguide.model.models.places.CityPlacesResponse;
+import project.almaty.kz.almatyguide.model.models.places.PhotoPlaces;
 import project.almaty.kz.almatyguide.model.models.places.ResultPlaces;
 import project.almaty.kz.almatyguide.model.rest.ApiClient;
 import project.almaty.kz.almatyguide.model.rest.ApiClientDistance;
@@ -59,13 +60,17 @@ public class BaseFragment extends Fragment {
             public void onResponse(Call<CityPlacesResponse> call, Response<CityPlacesResponse> response) {
                 CityPlacesResponse cityPlacesResponse = response.body();
                 List<ResultPlaces> resultPlaces = cityPlacesResponse.getResults();
+                List<PhotoPlaces> photoPlaces = resultPlaces.get(0).getPhotoPlaces();
                 recyclerView.setAdapter(new AllCategoryAdapter(getActivity(),resultPlaces));
-                Log.d("ssss","size" + resultPlaces.size());
+                Log.d("ssss","size" + photoPlaces.size());
+                for (int i = 0; i < resultPlaces.size(); i++) {
+                    Log.d("ssss","lll" + resultPlaces.get(i).getPhotoPlaces());
+                }
             }
 
             @Override
             public void onFailure(Call<CityPlacesResponse> call, Throwable t) {
-                Log.d("ssss","size" + t.getMessage());
+                Log.d("ssss","error" + t.getMessage());
                 Toast.makeText(getActivity(),t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });

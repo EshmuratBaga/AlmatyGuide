@@ -7,14 +7,16 @@
     android:layout_height="match_parent"
     tools:context="project.almaty.kz.almatyguide.model.screen.around_me.AroundMeActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            tools:layout_editor_absoluteY="25dp"
+            tools:layout_editor_absoluteX="8dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -25,9 +27,12 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_around_me" />
+        <include layout="@layout/content_around_me"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationView"

@@ -45,7 +45,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailsMapFragment extends Fragment{
+public class DetailsMapFragment extends Fragment implements OnMapReadyCallback{
     private static final String MAP_KEY = "map_key";
     private Location resultPlaces;
     private Bundle bundle;
@@ -75,8 +75,6 @@ public class DetailsMapFragment extends Fragment{
         if (bundle != null){
             resultPlaces = bundle.getParcelable(MAP_KEY);
         }
-        Log.d("dddd","lag" + resultPlaces.getLat());
-        Log.d("dddd","lag" + resultPlaces.getLng());
 
         ApiInterface apiInterface = ApiClient.getApiInterface();
         Call<DistanceResponse> call = apiInterface.getWay(Constants.UPlat + ", " + Constants.UPlng,String.valueOf(resultPlaces.getLat()) + ", " + String.valueOf(resultPlaces.getLng()),true,"ru", Constants.apiKey);
@@ -110,65 +108,17 @@ public class DetailsMapFragment extends Fragment{
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
-//        mMapView.onResume(); // needed to get the map to display immediately
+        mMapView.onResume(); // needed to get the map to display immediately
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-//                googleMap.setMyLocationEnabled(true);
-                Log.d("dddd","onMapReady");
-                PolylineOptions line = new PolylineOptions();
-                line.width(4f).color(R.color.secondary_text);
-                Builder latLngBuilder = new Builder();
-                for (int i = 0; i < mPoints.size(); i++) {
-                    if (i == 0) {
-                        MarkerOptions startMarkerOptions = new MarkerOptions()
-                                .position(mPoints.get(i))
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_blue_300_24dp));
-                        googleMap.addMarker(startMarkerOptions);
-                    } else if (i == mPoints.size() - 1) {
-                        MarkerOptions endMarkerOptions = new MarkerOptions()
-                                .position(mPoints.get(i))
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_teal_a700_24dp));
-                        googleMap.addMarker(endMarkerOptions);
-                    }
-                    Log.d("dddd","" + 1);
-                    line.add(mPoints.get(i));
-                    latLngBuilder.include(mPoints.get(i));
-                }
-                googleMap.addPolyline(line);
-                int size = getResources().getDisplayMetrics().widthPixels;
-                LatLngBounds latLngBounds = latLngBuilder.build();
-                CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 25);
-                googleMap.moveCamera(track);
-//                // For showing a move to my location button
-//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    // TODO: Consider calling
-//                    //    ActivityCompat#requestPermissions
-//                    // here to request the missing permissions, and then overriding
-//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                    //                                          int[] grantResults)
-//                    // to handle the case where the user grants the permission. See the documentation
-//                    // for ActivityCompat#requestPermissions for more details.
-//                    return;
-//                }
-            }
-        });
+        mMapView.getMapAsync(this);
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
 
     @Override
     public void onResume() {
@@ -195,5 +145,47 @@ public class DetailsMapFragment extends Fragment{
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap gMap) {
+            googleMap = gMap;
+//                googleMap.setMyLocationEnabled(true);
+            Log.d("dddd","onMapReady");
+            PolylineOptions line = new PolylineOptions();
+            line.width(4f).color(R.color.secondary_text);
+            Builder latLngBuilder = new Builder();
+            for (int i = 0; i < mPoints.size(); i++) {
+                if (i == 0) {
+                    MarkerOptions startMarkerOptions = new MarkerOptions()
+                            .position(mPoints.get(i))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_blue_300_24dp));
+                    googleMap.addMarker(startMarkerOptions);
+                } else if (i == mPoints.size() - 1) {
+                    MarkerOptions endMarkerOptions = new MarkerOptions()
+                            .position(mPoints.get(i))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_teal_a700_24dp));
+                    googleMap.addMarker(endMarkerOptions);
+                }
+                Log.d("dddd","" + 1);
+                line.add(mPoints.get(i));
+                latLngBuilder.include(mPoints.get(i));
+            }
+            googleMap.addPolyline(line);
+            int size = getResources().getDisplayMetrics().widthPixels;
+            LatLngBounds latLngBounds = latLngBuilder.build();
+            CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 25);
+            googleMap.moveCamera(track);
+//                // For showing a move to my location button
+//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    return;
+//                }
     }
 }
