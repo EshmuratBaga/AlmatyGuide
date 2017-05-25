@@ -14,7 +14,7 @@ import project.almaty.kz.almatyguide.model.utils.Constants;
  * Created by Andrey on 3/20/2017.
  */
 
-public class PhotoPlaces implements Parcelable{
+public class PhotoPlaces {
 
     @SerializedName("height")
     @Expose
@@ -46,7 +46,7 @@ public class PhotoPlaces implements Parcelable{
     }
 
     public String getPhotoReference() {
-        return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + Constants.apiKey;
+        return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + Constants.apiKey;
     }
 
     public void setPhotoReference(String photoReference) {
@@ -59,37 +59,5 @@ public class PhotoPlaces implements Parcelable{
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    protected PhotoPlaces(Parcel in) {
-        height = in.readInt();
-        htmlAttributions = in.createStringArrayList();
-        photoReference = in.readString();
-        width = in.readInt();
-    }
-
-    public static final Creator<PhotoPlaces> CREATOR = new Creator<PhotoPlaces>() {
-        @Override
-        public PhotoPlaces createFromParcel(Parcel in) {
-            return new PhotoPlaces(in);
-        }
-
-        @Override
-        public PhotoPlaces[] newArray(int size) {
-            return new PhotoPlaces[size];
-        }
-    };
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(height);
-        dest.writeStringList(htmlAttributions);
-        dest.writeString(photoReference);
-        dest.writeInt(width);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 }

@@ -61,6 +61,8 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
                     Intent intent = new Intent(context, DetailsActivity.class);
                     intent.putExtra("result", places.get(getAdapterPosition()));
                     intent.putExtra("location",places.get(getAdapterPosition()).getGeometry().getLocation());
+                    intent.putExtra("distance",txtDistance.getText());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
                     break;
             }
@@ -76,11 +78,8 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
         if (places.get(position).getPhotoPlaces() != null){
-            Log.d("dddd","sdsadsd");
-            Log.d("dddd","" + places.get(position).getPhotoPlaces().get(0).getPhotoReference());
             Picasso.with(context).load(places.get(position).getPhotoPlaces().get(0).getPhotoReference()).centerCrop().fit().into(holder.imageView);
         }else {
-            Log.d("dddd","sdsadsd");
             Picasso.with(context).load(R.drawable.bar).centerCrop().fit().into(holder.imageView);
         }
         holder.txtTitle.setText(places.get(position).getName());
@@ -105,12 +104,8 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
                 * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
                 * Math.sin(dLon / 2);
         double c = 2 * Math.asin(Math.sqrt(a));
-//        double km = valueResult / 1;
         DecimalFormat newFormat = new DecimalFormat("0.0");
         String valueResult = newFormat.format(Radius * c);
-//        int kmInDec = Integer.valueOf(newFormat.format(km));
-//        double meter = valueResult % 1000;
-//        int meterInDec = Integer.valueOf(newFormat.format(meter));
         Log.i("ssss", "val:" + valueResult + " Radius * c " + Radius * c);
 
         return valueResult;

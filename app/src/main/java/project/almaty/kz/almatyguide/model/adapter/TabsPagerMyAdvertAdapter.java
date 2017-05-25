@@ -21,12 +21,14 @@ public class TabsPagerMyAdvertAdapter extends FragmentPagerAdapter {
     private Context context;
     private ResultPlaces resultPlaces;
     private Location location;
+    private String distance;
 
-    public TabsPagerMyAdvertAdapter(Context context, FragmentManager fm, ResultPlaces resultPlaces, Location location) {
+    public TabsPagerMyAdvertAdapter(Context context, FragmentManager fm, ResultPlaces resultPlaces, Location location, String distance) {
         super(fm);
         this.context = context;
         this.resultPlaces = resultPlaces;
         this.location = location;
+        this.distance = distance;
         tabs = new String[]{
                 "Информация",
                 "Карта",
@@ -42,7 +44,7 @@ public class TabsPagerMyAdvertAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return DetailsInformationFragment.getInstance(resultPlaces);
+                return DetailsInformationFragment.getInstance(resultPlaces, distance);
             case 1:
                 return DetailsMapFragment.getInstance(location);
         }

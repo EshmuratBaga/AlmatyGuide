@@ -154,12 +154,12 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     private void initListData() {
         categoryModels = new ArrayList<>();
-        CategoryModel categoryModel1 = new CategoryModel("Отель", R.drawable.hotel, "hotel");
-        CategoryModel categoryModel2 = new CategoryModel("Столовая", R.drawable.stolovay, "food");
+        CategoryModel categoryModel1 = new CategoryModel("Супермаркет", R.drawable.hotel, "shopping_mall");
+        CategoryModel categoryModel2 = new CategoryModel("Кафе", R.drawable.stolovay, "cafe");
         CategoryModel categoryModel3 = new CategoryModel("Банкомат", R.drawable.atm, "atm");
         CategoryModel categoryModel4 = new CategoryModel("Банк", R.drawable.bank, "bank");
         CategoryModel categoryModel5 = new CategoryModel("Ресторан", R.drawable.resturant, "restaurant");
-        CategoryModel categoryModel6 = new CategoryModel("Хостел", R.drawable.hostel, "gym");
+        CategoryModel categoryModel6 = new CategoryModel("Хостел", R.drawable.hostel, "lodging");
         CategoryModel categoryModel7 = new CategoryModel("Аптека", R.drawable.apteka, "pharmacy");
         CategoryModel categoryModel8 = new CategoryModel("Бар", R.drawable.bar, "bar");
 

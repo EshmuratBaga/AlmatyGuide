@@ -48,9 +48,9 @@ public class ResultPlaces implements Parcelable {
     @SerializedName("opening_hours")
     @Expose
     private OpeningHours openingHours;
-    @SerializedName("photoPlaces")
+    @SerializedName("photos")
     @Expose
-    private List<PhotoPlaces> photoPlaces = null;
+    private List<PhotoPlaces> photoPlaces = new ArrayList<>();
 
     public ResultPlaces(Geometry geometry, String icon, String id, String name,
                         String placeId, String reference, String scope,
@@ -176,8 +176,6 @@ public class ResultPlaces implements Parcelable {
         types = in.createStringArrayList();
         vicinity = in.readString();
         rating = in.readFloat();
-        photoPlaces = new ArrayList<PhotoPlaces>();
-        in.readTypedList(photoPlaces, PhotoPlaces.CREATOR);
     }
 
     public static final Creator<ResultPlaces> CREATOR = new Creator<ResultPlaces>() {
@@ -208,7 +206,5 @@ public class ResultPlaces implements Parcelable {
         dest.writeStringList(types);
         dest.writeString(vicinity);
         dest.writeFloat(rating);
-        dest.writeTypedList(photoPlaces);
-        dest.writeList(photoPlaces);
     }
 }

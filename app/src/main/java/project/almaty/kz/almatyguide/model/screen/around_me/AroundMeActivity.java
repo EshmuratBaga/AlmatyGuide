@@ -1,5 +1,6 @@
 package project.almaty.kz.almatyguide.model.screen.around_me;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +15,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import io.realm.RealmResults;
 import project.almaty.kz.almatyguide.R;
 import project.almaty.kz.almatyguide.model.screen.atm.AtmFragment;
 import project.almaty.kz.almatyguide.model.screen.bank.BankFragment;
+import project.almaty.kz.almatyguide.model.screen.food.FoodFragment;
+import project.almaty.kz.almatyguide.model.screen.main.MainActivity;
 import project.almaty.kz.almatyguide.model.screen.restaurant.RestaurantFragment;
 import project.almaty.kz.almatyguide.model.utils.Constants;
 
@@ -70,6 +74,26 @@ public class AroundMeActivity extends AppCompatActivity {
             fragment = new RestaurantFragment();
             title = "Ресторан";
         }
+        if (type.equals("cafe")){
+            fragment = new BankFragment();
+            title = "Кафе";
+        }
+        if (type.equals("shopping_mall")){
+            fragment = new RestaurantFragment();
+            title = "Супермаркет";
+        }
+        if (type.equals("bar")){
+            fragment = new BankFragment();
+            title = "Бар";
+        }
+        if (type.equals("lodging")){
+            fragment = new AtmFragment();
+            title = "Хостел";
+        }
+        if (type.equals("pharmacy")){
+            fragment = new RestaurantFragment();
+            title = "Аптека";
+        }
         setFragment(fragment);
         setActionBarTitle(title);
     }
@@ -121,11 +145,44 @@ public class AroundMeActivity extends AppCompatActivity {
                 title = "Еда";
                 bundle.putString(Constants.TYPE_PLACE,"restaurant");
                 break;
+            case R.id.menu_bar:
+                fragment = new BankFragment();
+                title = "Бар";
+                bundle.putString(Constants.TYPE_PLACE,"bar");
+                break;
+            case R.id.menu_hotel:
+                fragment = new AtmFragment();
+                title = "Супермаркет";
+                bundle.putString(Constants.TYPE_PLACE,"shopping_mall");
+                break;
+            case R.id.menu_hostel:
+                fragment = new BankFragment();
+                title = "Хостел";
+                bundle.putString(Constants.TYPE_PLACE,"lodging");
+                break;
+            case R.id.menu_medical:
+                fragment = new RestaurantFragment();
+                title = "Аптека";
+                bundle.putString(Constants.TYPE_PLACE,"pharmacy");
+                break;
+            case R.id.menu_food:
+                fragment = new AtmFragment();
+                title = "Кафе";
+                bundle.putString(Constants.TYPE_PLACE,"cafe");
+                break;
+            case R.id.menu_home:
+                fragment = null;
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                break;
             default:
+                Log.d("dddd","favorite");
                 break;
         }
-        setFragment(fragment);
-        setActionBarTitle(title);
+        if (fragment != null){
+            setFragment(fragment);
+            setActionBarTitle(title);
+        }
         drawerLayout.closeDrawer(navigationView);
     }
 

@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import project.almaty.kz.almatyguide.model.utils.Constants;
+
 public class Photo {
 
     @SerializedName("height")
@@ -37,7 +39,7 @@ public class Photo {
     }
 
     public String getPhotoReference() {
-        return photoReference;
+        return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + Constants.apiKey;
     }
 
     public void setPhotoReference(String photoReference) {

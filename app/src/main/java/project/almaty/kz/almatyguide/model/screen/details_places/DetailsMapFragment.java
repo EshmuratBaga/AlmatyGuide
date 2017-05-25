@@ -70,24 +70,41 @@ public class DetailsMapFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("dddd","onCreate");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             final Bundle savedInstanceState) {
+        Log.d("dddd","onCreateView");
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_details_map, container, false);
+        mMapView = (MapView) view.findViewById(R.id.mapView);
+
         bundle = getArguments();
         if (bundle != null){
             resultPlaces = bundle.getParcelable(MAP_KEY);
+            Log.d("dddd","resPlace" + resultPlaces.getLat());
         }
 
         ApiInterface apiInterface = ApiClient.getApiInterface();
         Call<DistanceResponse> call = apiInterface.getWay(Constants.UPlat + ", " + Constants.UPlng,String.valueOf(resultPlaces.getLat()) + ", " + String.valueOf(resultPlaces.getLng()),true,"ru", Constants.apiKey);
+        Log.d("dddd","er");
         call.enqueue(new Callback<DistanceResponse>() {
             @Override
             public void onResponse(Call<DistanceResponse> call, Response<DistanceResponse> response) {
+                Log.d("dddd","err");
                 DistanceResponse distanceResponse = response.body();
                 String status = distanceResponse.getStatus();
                 if (status.equals("OK")){
+                    Log.d("dddd","status ok");
                     List<Route> routes = distanceResponse.getRoutes();
                     OverviewPolyline points = routes.get(0).getOverviewPolyline();
                     mPoints = PolyUtil.decode(String.valueOf(points.getPoints()));
-
+                    mMapView.onCreate(savedInstanceState);
+                    mMapView.onResume(); // needed to get the map to display immediately
+                    Log.d("dddd","points" + mPoints.size());
+                }else {
+                    Log.d("dddd","error");
                 }
             }
 
@@ -97,48 +114,9 @@ public class DetailsMapFragment extends Fragment implements OnMapReadyCallback{
                 Log.d("dddd",t.getMessage());
             }
         });
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Log.d("dddd","onViewCreate");
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_details_map, container, false);
-        mMapView = (MapView) view.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-
-        mMapView.onResume(); // needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         mMapView.getMapAsync(this);
         return view;
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-        Log.d("dddd","onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-        Log.d("dddd","onPause");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-        Log.d("dddd","onDestroy");
     }
 
     @Override
@@ -167,7 +145,6 @@ public class DetailsMapFragment extends Fragment implements OnMapReadyCallback{
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_teal_a700_24dp));
                     googleMap.addMarker(endMarkerOptions);
                 }
-                Log.d("dddd","" + 1);
                 line.add(mPoints.get(i));
                 latLngBuilder.include(mPoints.get(i));
             }
@@ -176,16 +153,5 @@ public class DetailsMapFragment extends Fragment implements OnMapReadyCallback{
             LatLngBounds latLngBounds = latLngBuilder.build();
             CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 25);
             googleMap.moveCamera(track);
-//                // For showing a move to my location button
-//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    // TODO: Consider calling
-//                    //    ActivityCompat#requestPermissions
-//                    // here to request the missing permissions, and then overriding
-//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                    //                                          int[] grantResults)
-//                    // to handle the case where the user grants the permission. See the documentation
-//                    // for ActivityCompat#requestPermissions for more details.
-//                    return;
-//                }
     }
 }

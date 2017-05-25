@@ -38,11 +38,13 @@ public class DetailsInformationFragment extends Fragment {
     private TextView txtDistance;
     private TextView txtTell;
     private Bundle bundle;
+    private String distrance;
 
-    public static DetailsInformationFragment getInstance(ResultPlaces resultPlaces) {
+    public static DetailsInformationFragment getInstance(ResultPlaces resultPlaces, String distance) {
         Bundle args = new Bundle();
         DetailsInformationFragment fragment = new DetailsInformationFragment();
         args.putParcelable("place", resultPlaces);
+        args.putString("dis", distance);
         fragment.setArguments(args);
 
         return fragment;
@@ -58,6 +60,7 @@ public class DetailsInformationFragment extends Fragment {
         bundle = getArguments();
         if (bundle != null){
             resultPlaces = bundle.getParcelable("place");
+            distrance = bundle.getString("dis");
         }
     }
 
@@ -79,7 +82,6 @@ public class DetailsInformationFragment extends Fragment {
         txtDistance = (TextView) view.findViewById(R.id.txt_details_distance);
         txtTell = (TextView) view.findViewById(R.id.txt_details_number_phone);
 
-
         ApiInterface apiInterface = ApiClient.getApiInterface();
         Call<PlaceDetailsResponse> call = apiInterface.getDetailsPlace(resultPlaces.getPlaceId(), Constants.apiKey);
         call.enqueue(new Callback<PlaceDetailsResponse>() {
@@ -92,10 +94,15 @@ public class DetailsInformationFragment extends Fragment {
                     txtTitle.setText(resultDetails.getName());
                     txtTell.setText(resultDetails.getFormattedPhoneNumber());
                     txtAddress.setText(resultDetails.getFormattedAddress());
+                    txtDistance.setText(distrance);
                     String url = "http://maps.google.com/maps/api/staticmap?center=" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng() +
                             "&zoom=13&size=600x300&sensor=false&markers=size:mid%7Ccolor:0x5ac5f8%7Clabel:%7C" + resultDetails.getGeometry().getLocation().getLat() + "," + resultDetails.getGeometry().getLocation().getLng() + "";
+                    if (resultDetails.getPhotos() != null){
+                        Picasso.with(getContext()).load(resultDetails.getPhotos().get(0).getPhotoReference()).centerCrop().fit().into(imageView);
+                    }else {
+                        Picasso.with(getContext()).load(R.drawable.bar).centerCrop().fit().into(imageView);
+                    }
                     Picasso.with(getContext()).load(url).centerCrop().fit().into(imgMap);
-
                     bundle.putDouble("lat", resultDetails.getGeometry().getLocation().getLat());
                     bundle.putDouble("lng", resultDetails.getGeometry().getLocation().getLng());
                 }

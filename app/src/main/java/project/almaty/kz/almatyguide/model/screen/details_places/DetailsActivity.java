@@ -29,6 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ResultPlaces resultPlaces;
     private Location location;
+    private String distance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class DetailsActivity extends AppCompatActivity {
         if (getIntent() != null){
             resultPlaces = getIntent().getParcelableExtra("result");
             location = getIntent().getParcelableExtra("location");
+            distance = getIntent().getExtras().getString("distance");
         }
 
         initActionBar();
@@ -51,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void initViewPager() {
         viewPager = (ViewPager)findViewById(R.id.view_pager_my_advert);
-        TabsPagerMyAdvertAdapter adapter = new TabsPagerMyAdvertAdapter(this,getSupportFragmentManager(),resultPlaces,location);
+        TabsPagerMyAdvertAdapter adapter = new TabsPagerMyAdvertAdapter(this,getSupportFragmentManager(),resultPlaces,location,distance);
         viewPager.setAdapter(adapter);
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout_details);

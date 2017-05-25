@@ -60,12 +60,7 @@ public class BaseFragment extends Fragment {
             public void onResponse(Call<CityPlacesResponse> call, Response<CityPlacesResponse> response) {
                 CityPlacesResponse cityPlacesResponse = response.body();
                 List<ResultPlaces> resultPlaces = cityPlacesResponse.getResults();
-                List<PhotoPlaces> photoPlaces = resultPlaces.get(0).getPhotoPlaces();
                 recyclerView.setAdapter(new AllCategoryAdapter(getActivity(),resultPlaces));
-                Log.d("ssss","size" + photoPlaces.size());
-                for (int i = 0; i < resultPlaces.size(); i++) {
-                    Log.d("ssss","lll" + resultPlaces.get(i).getPhotoPlaces());
-                }
             }
 
             @Override
